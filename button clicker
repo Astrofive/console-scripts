@@ -1,0 +1,30 @@
+(function() {
+    const buttonSelector = '.ConfirmButton--3dmhzb'; // this may have to be updated
+    
+    const clicksPerSecond = 30;
+    const clickInterval = 1000 / clicksPerSecond; // ~33.33ms
+    const pauseDuration = 2000; // 2 seconds
+
+    let timeoutId = null;
+    let isRunning = true;
+
+    function clickLoop() {
+        if (!isRunning) return;
+
+        const button = document.querySelector(buttonSelector);
+
+        if (button) {
+            button.click();
+            // Button found: queue next click at 30 clicks/sec
+            timeoutId = setTimeout(clickLoop, clickInterval);
+        } else {
+            console.log("Button not found. Pausing for 2 seconds...");
+            // Button missing: pause for 2 seconds before checking again
+            timeoutId = setTimeout(clickLoop, pauseDuration);
+        }
+    }
+
+    // Start the loop
+    clickLoop();
+
+})();
