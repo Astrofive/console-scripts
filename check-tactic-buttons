@@ -1,0 +1,18 @@
+(async () => {
+  const checkboxes = document.querySelectorAll('button[role="checkbox"]');
+  let count = 0;
+
+  for (const checkbox of checkboxes) {
+    if (checkbox.getAttribute('data-state') === 'unchecked') {
+      const row = checkbox.closest('button[type="button"]:not([role="checkbox"])') || checkbox;
+      
+      row.click();
+      count++;
+      
+      // Pause for 50ms to let the UI register the click and update
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+  }
+
+  console.log(`%c Done! Checked ${count} items.`, 'background: #222; color: #bada55; padding: 4px;');
+})();
